@@ -1,0 +1,354 @@
+/* Reset CSS de base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Contenu principal */
+.app-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
+}
+
+.divider {
+    height: 2px;
+    background-color: #ecf0f1;
+    margin: 40px 0;
+}
+
+/* Footer */
+.app-footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+}
+
+/* Composant FileUpload */
+.file-upload-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.upload-area.drag-over {
+    border-color: #2c3e50;
+    background-color: rgba(44, 62, 80, 0.05);
+}
+
+.upload-area.error {
+    border-color: #e74c3c;
+}
+
+.excel-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 15px;
+}
+
+.excel-icon-small {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.browse-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.browse-btn:hover {
+    background-color: #2980b9;
+}
+
+.file-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    background-color: rgba(52, 152, 219, 0.1);
+    padding: 10px 15px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.upload-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover:not(:disabled) {
+    background-color: #27ae60;
+}
+
+.upload-btn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: #ecf0f1;
+    border-radius: 3px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress-inner {
+    height: 100%;
+    width: 100%;
+    background-color: #3498db;
+    animation: progress 2s infinite linear;
+    transform-origin: 0% 50%;
+}
+
+@keyframes progress {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Composant StudentList */
+.student-list-container {
+    padding: 20px;
+}
+
+.student-list-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    color: #7f8c8d;
+}
+
+.has-data .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+    max-width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.export-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.export-btn:hover {
+    background-color: #219951;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.students-table th, 
+.students-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.students-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.students-table th:hover {
+    background-color: #e9ecef;
+}
+
+.sort-icon {
+    position: absolute;
+    right: 10px;
+}
+
+.students-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.page-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.page-btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+.page-info {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Styles responsifs */
+@media (max-width: 768px) {
+    .app-header h1 {
+        font-size: 24px;
+    }
+    
+    .app-content {
+        padding: 20px 15px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+}

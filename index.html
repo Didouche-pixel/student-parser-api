@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire d'Étudiants</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/assets/styles.css">
+    <!-- Vue.js via CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Axios via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>Gestion des Étudiants</h1>
+        </header>
+        
+        <main class="app-content">
+            <!-- Composant d'import de fichier -->
+            <div class="file-upload-container">
+                <h2>Import des étudiants</h2>
+                
+                <div 
+                    class="upload-area" 
+                    :class="{ 'drag-over': isDragOver, 'error': errorMessage }"
+                    @dragover.prevent="handleDragOver"
+                    @dragleave.prevent="isDragOver = false"
+                    @drop.prevent="handleFileDrop"
+                >
+                    <div v-if="!selectedFile">
+                        <img src="src/assets/excel-icon.svg" alt="Excel Icon" class="excel-icon" />
+                        <p>Glissez-déposez votre fichier Excel ici ou</p>
+                        <button class="browse-btn" @click="triggerFileInput">Parcourir</button>
+                        <input 
+                            ref="fileInput" 
+                            type="file" 
+                            accept=".xlsx, .xls" 
+                            class="hidden-input" 
+                            @change="handleFileSelected"
+                        />
+                    </div>
+                    <div v-else class="file-selected">
+                        <div class="file-info">
+                            <img src="src/assets/excel-icon.svg" alt="Excel Icon" class="excel-icon-small" />
+                            <span>{{ selectedFile.name }}</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="upload-btn" @click="uploadFile" :disabled="isUploading">
+                                {{ isUploading ? 'Importation...' : 'Importer' }}
+                            </button>
+                            <button class="cancel-btn" @click="cancelUpload">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div v-if="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+                
+                <div v-if="isUploading" class="progress-bar">
+                    <div class="progress-inner"></div>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Composant liste d'étudiants -->
+            <div class="student-list-container">
+                <h2>Liste des étudiants importés</h2>
+                
+                <div v-if="!students || students.length === 0" class="no-data">
+                    <p>Aucun étudiant n'a été importé. Veuillez importer un fichier Excel.</p>
+                </div>
+                
+                <div v-else class="has-data">
+                    <div class="controls">
+                        <div class="search-box">
+                            <input 
+                                type="text" 
+                                v-model="searchQuery" 
+                                placeholder="Rechercher un étudiant..." 
+                                class="search-input"
+                            />
+                        </div>
+                        <button class="export-btn" @click="exportToExcel">
+                            Exporter en Excel
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Numéro</th>
+                                    <th @click="sortBy('lastName')">
+                                        Nom
+                                        <span v-if="sortKey === 'lastName'" class="sort-icon">
+                                            {{ sortOrder === 'asc' ? '▲' : '▼' }}
+                                        </span>
+                                    </th>
+                                    <th @click="sortBy('firstName')">
+                                        Prénom
+                                        <span v-if="sortKey === 'firstName'" class="sort-icon">
+                                            {{ sortOrder === 'asc' ? '▲' : '▼' }}
+                                        </span>
+                                    </th>
+                                    <th @click="sortBy('birthDate')">
+                                        Date de naissance
+                                        <span v-if="sortKey === 'birthDate'" class="sort-icon">
+                                            {{ sortOrder === 'asc' ? '▲' : '▼' }}
+                                        </span>
+                                    </th>
+                                    <th>Adresse</th>
+                                    <th>Groupe TD</th>
+                                    <th>Groupe TP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="student in filteredAndSortedStudents" :key="student.studentNumber">
+                                    <td>{{ student.studentNumber }}</td>
+                                    <td>{{ student.lastName }}</td>
+                                    <td>{{ student.firstName }}</td>
+                                    <td>{{ formatDate(student.birthDate) }}</td>
+                                    <td>{{ student.address }}</td>
+                                    <td>{{ student.tdGroup || '-' }}</td>
+                                    <td>{{ student.tpGroup || '-' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button 
+                            @click="currentPage--" 
+                            :disabled="currentPage === 1"
+                            class="page-btn"
+                        >
+                            Précédent
+                        </button>
+                        <span class="page-info">Page {{ currentPage }} sur {{ totalPages }}</span>
+                        <button 
+                            @click="currentPage++" 
+                            :disabled="currentPage === totalPages"
+                            class="page-btn"
+                        >
+                            Suivant
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; {{ new Date().getFullYear() }} - Application de Gestion des Étudiants</p>
+        </footer>
+    </div>
+
+    <!-- Script principal -->
+    <script src="src/main.js"></script>
+</body>
+</html>
